@@ -1,0 +1,25 @@
+# PyTorch (CPU version for broad compatibility)
+--index-url https://download.pytorch.org/whl/cpu
+--extra-index-url https://pypi.org/simple
+
+torch==2.5.1+cpu
+torchvision==0.20.1+cpu
+
+# FastAPI and server
+fastapi[standard]==0.115.5
+python-multipart==0.0.12
+
+# Image and video processing
+imageio==2.36.0
+imageio-ffmpeg==0.5.1
+scikit-image==0.24.0
+scipy==1.14.1
+numpy==1.26.4
+Pillow==11.0.0
+
+# Face detection and alignment
+face-alignment==1.4.1
+
+# Model loading
+PyYAML==6.0.2
+tqdm==4.67.1
