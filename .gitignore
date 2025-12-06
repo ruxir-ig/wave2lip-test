@@ -1,12 +1,8 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -19,69 +15,43 @@ lib64/
 parts/
 sdist/
 var/
+wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# Environments
-.env
-.venv
-env/
+# Virtual environments
 venv/
 ENV/
-env.bak/
-venv.bak/
+env/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Rope project settings
-.ropeproject
+# OS
+.DS_Store
+Thumbs.db
 
-# mkdocs documentation
-/site
+# Project specific
+checkpoints/
+results/
+*.mp4
+*.wav
+*.png
+*.jpg
+*.pkl
+.env
+logs/
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
 
-# Pyre type checker
-.pyre/
+# Node (if using npm)
+node_modules/
 
-# Pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# First-order-model repository (ignore cloned repo)
-first-order-model/
+first-order-model

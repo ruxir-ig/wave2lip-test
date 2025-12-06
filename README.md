@@ -1,94 +1,44 @@
-# First-Order-Model Face Animation API
+First Order Motion Model – FastAPI deployment helper
+===================================================
 
-FastAPI endpoint for animating a source image using a driving video, based on the First-Order Motion Model for Image Animation.
+This repo adapts the First Order Motion Model demo into a FastAPI service for animating a source face image using a driving video. See `api/` for the service code and `book.ipynb` for the original exploratory notebook.
 
-## Credits
+Credits
+-------
+- Original notebook and workflow inspiration: https://colab.research.google.com/github/eyaler/avatars4all/blob/master/fomm_bibi.ipynb
+- Model code: https://github.com/AliaksandrSiarohin/first-order-model
 
-This project is based on the work from:
+Getting Started (local)
+-----------------------
+1) Create a virtualenv and install requirements:
+	```bash
+	python -m venv venv
+	source venv/bin/activate
+	pip install -r api/requirements.txt
+	```
+2) Download weights into `first-order-model/` (e.g., `vox-adv-cpk.pth.tar`).
+3) Run the API:
+	```bash
+	cd api
+	uvicorn app:app --host 0.0.0.0 --port 8000
+	```
+4) Open http://localhost:8000/docs to test.
 
-- **Original Colab Notebook**: [fomm_bibi.ipynb](https://colab.research.google.com/github/eyaler/avatars4all/blob/master/fomm_bibi.ipynb)
-- **First-Order-Model**: [eyaler/first-order-model](https://github.com/eyaler/first-order-model)
-
-## API Endpoints
-
-| Endpoint        | Method | Description                           |
-| --------------- | ------ | ------------------------------------- |
-| `/`             | GET    | API info and available endpoints      |
-| `/health`       | GET    | Health check                          |
-| `/animate`      | POST   | Generate animation from image + video |
-| `/reload_model` | GET    | Reload model weights                  |
-
-## Quick Start
-
-### Using Docker (Recommended)
-
+Docker (GPU)
+------------
 ```bash
-# Build the image
-cd backend
-docker build -t wave2lip-api .
-
-# Run the container
-docker run -p 8000:8000 wave2lip-api
+docker build -t fomm-api .
+docker run --gpus all -p 8000:8000 \
+  -v $(pwd)/first-order-model/vox-adv-cpk.pth.tar:/app/first-order-model/vox-adv-cpk.pth.tar \
+  fomm-api
 ```
 
-### Manual Setup
+Deployment on Lightning.ai
+--------------------------
+- Configure `lightning.yaml`, then deploy with the Lightning CLI or run inside a Lightning Studio GPU workspace.
 
-```bash
-cd backend
-pip install -r requirements.txt
-
-# Clone first-order-model if not present
-git clone --depth 1 https://github.com/eyaler/first-order-model ../first-order-model
-
-# Download weights
-wget https://openavatarify.s3.amazonaws.com/weights/vox-adv-cpk.pth.tar \
-    -O ../first-order-model/vox-adv-cpk.pth.tar
-
-# Run the server
-fastapi run main.py --port 8000
-```
-
-## Usage
-
-### Animate Endpoint
-
-```bash
-curl -X POST http://localhost:8000/animate \
-  -F "source_image=@face.jpg" \
-  -F "driving_video=@video.mp4" \
-  -o animated.mp4
-```
-
-### With Options
-
-```bash
-curl -X POST "http://localhost:8000/animate?find_best_frame=true&relative=true&adapt_scale=true" \
-  -F "source_image=@face.jpg" \
-  -F "driving_video=@video.mp4" \
-  -o animated.mp4
-```
-
-### Health Check
-
-```bash
-curl http://localhost:8000/health
-# {"status": "healthy", "models_loaded": true}
-```
-
-## API Parameters
-
-| Parameter         | Type | Default  | Description                       |
-| ----------------- | ---- | -------- | --------------------------------- |
-| `source_image`    | File | required | Face image to animate (jpg, png)  |
-| `driving_video`   | File | required | Video providing motion (mp4)      |
-| `find_best_frame` | bool | true     | Find best aligned frame           |
-| `relative`        | bool | true     | Use relative keypoint movement    |
-| `adapt_scale`     | bool | true     | Adapt movement scale to face size |
-
-## Lightning.ai Deployment
-
-1. Push this repository to GitHub
-2. Create a new Lightning.ai Studio
-3. Connect your GitHub repository
-4. Build using the Dockerfile in `backend/`
-5. Expose port 8000
+Security Notes
+--------------
+- Validate input sizes and types; keep uploads small.
+- Run containers as non-root when possible.
+- Clean temporary files and avoid bundling large checkpoints inside images; mount them instead.

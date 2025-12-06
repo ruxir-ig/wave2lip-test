@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  wave2lip-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wave2lip-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount only specific files for development (not the entire directory)
+      - ./backend/main.py:/app/main.py
+      - ./backend/inference.py:/app/inference.py
+      # Persist model weights to avoid re-downloading
+      - ./checkpoints:/app/checkpoints
+      # Persist output files
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=info
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

@@ -22,7 +22,7 @@ warnings.filterwarnings("ignore")
 
 # Add first-order-model to path
 FIRST_ORDER_MODEL_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "first-order-model")
+    os.path.join(os.path.dirname(__file__), "first-order-model")
 )
 if FIRST_ORDER_MODEL_DIR not in sys.path:
     sys.path.insert(0, FIRST_ORDER_MODEL_DIR)
