@@ -1,57 +1,39 @@
+cat > .gitignore << 'EOF'
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual environments
 venv/
-ENV/
 env/
+
+# Jupyter
+*.ipynb_checkpoints
+book.ipynb
+
+# Model files & data
+checkpoints/
+output/
+*.pth
+*.tar
+*.ckpt
+first-order-model/
+
+# Test files
+*.mp4
+*.jpg
+*.png
+
+# Lightning Studio
+.lightning_studio/
+.gradio/
+certificate.pem
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-*~
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Project specific
-checkpoints/
-results/
-*.mp4
-*.wav
-*.png
-*.jpg
-*.pkl
-.env
-logs/
-
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb
-
-# Node (if using npm)
-node_modules/
-
-first-order-model

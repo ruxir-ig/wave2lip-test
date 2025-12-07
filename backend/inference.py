@@ -94,7 +94,7 @@ def load_models(
     generator.eval()
     kp_detector.eval()
     
-    print(f"✓ Models loaded successfully (CPU mode: {cpu})")
+    print(f"Models loaded successfully (CPU mode: {cpu})")
     return generator, kp_detector
 
 
@@ -272,7 +272,7 @@ def make_animation(
     
     # Save output video
     imageio.mimsave(output_path, [img_as_ubyte(frame) for frame in predictions], fps=fps)
-    print(f"✓ Animation saved to: {output_path}")
+    print(f"Animation saved to: {output_path}")
 
 
 if __name__ == "__main__":

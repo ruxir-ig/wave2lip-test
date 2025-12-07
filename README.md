@@ -35,7 +35,31 @@ docker run --gpus all -p 8000:8000 \
 
 Deployment on Lightning.ai
 --------------------------
-- Configure `lightning.yaml`, then deploy with the Lightning CLI or run inside a Lightning Studio GPU workspace.
+
+### Lightning Studios Setup
+
+Add the following to your `on_start.sh` script in Lightning Studios (located at `~/.lightning_studio/on_start.sh`):
+
+```bash
+# Start Docker service
+service docker start
+
+# Navigate to project
+cd ~/wave2lip-test/backend
+
+# Build and run Docker container
+docker build -t wave2lip-api .
+docker run -d -p 8000:8000 wave2lip-api
+
+# Wait for API to be ready
+sleep 10
+
+# Start Gradio interface
+cd ~/wave2lip-test
+python gradio_app.py
+```
+
+This will automatically start your API and Gradio interface every time the Studio starts.
 
 Security Notes
 --------------
